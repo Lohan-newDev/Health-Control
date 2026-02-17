@@ -5,53 +5,53 @@ import java.util.Objects;
 
 public class Medico {
 
-    private String Name;
-    private int Crm;
-    private LocalDate DiaDeAtendimento;
+    private String name;
+    private int crm;
+    private LocalDate diaDeAtendimento;
 
 
     public Medico(String name, int crm, LocalDate DiaDeAtendimento){
-        this.Name = name;
-        this.Crm = crm;
-        this.DiaDeAtendimento = DiaDeAtendimento;
+        this.name = name;
+        this.crm = crm;
+        this.diaDeAtendimento = DiaDeAtendimento;
 
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String Name) {
-        this.Name = Name;
+        this.name = Name;
     }
 
     public int getCrm() {
-        return Crm;
+        return crm;
     }
 
     public void setCrm(int crm) {
-        this.Crm = crm;
+        this.crm = crm;
     }
 
     public LocalDate getDiaDeAtendimento() {
-        return DiaDeAtendimento;
+        return diaDeAtendimento;
     }
 
     public void setDiaDeAtendimento(LocalDate diaDeAtendimento) {
-        this.DiaDeAtendimento = diaDeAtendimento;
+        this.diaDeAtendimento = diaDeAtendimento;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Medico medico = (Medico) o;
-        return Crm == medico.Crm &&
-                Objects.equals(Name, medico.Name) &&
-                Objects.equals(DiaDeAtendimento, medico.DiaDeAtendimento);
+        return crm == medico.crm &&
+                Objects.equals(name, medico.name) &&
+                Objects.equals(diaDeAtendimento, medico.diaDeAtendimento);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Name, Crm, DiaDeAtendimento);
+        return Objects.hash(name, crm, diaDeAtendimento);
     }
 }

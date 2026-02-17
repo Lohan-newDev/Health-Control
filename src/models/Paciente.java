@@ -1,42 +1,63 @@
 package models;
 
+import java.util.Objects;
+
 public class Paciente {
 
-    public String Name;
-    public double Rg;
-    public boolean HealthInsurance;
-    public double Phone;
+    public String name;
+    public int rg;
+    public int healthInsurance;
+    public String phone;
+
+    public Paciente(String name, int rg, int healthInsurance, String phone){
+        this.name = name;
+        this.rg = rg;
+        this.healthInsurance = healthInsurance;
+        this.phone = phone;
+    }
 
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public double getRg() {
-        return Rg;
+    public int getRg() {
+        return rg;
     }
 
-    public void setRg(double rg) {
-        Rg = rg;
+    public void setRg(int rg) {
+        this.rg = rg;
     }
 
-    public boolean isHealthInsurance() {
-        return HealthInsurance;
+    public int getHealthInsurance() {
+        return healthInsurance;
     }
 
-    public void setHealthInsurance(boolean healthInsurance) {
-        HealthInsurance = healthInsurance;
+    public void setHealthInsurance(int healthInsurance) {
+        this.healthInsurance = healthInsurance;
     }
 
-    public double getPhone() {
-        return Phone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhone(double phone) {
-        Phone = phone;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Paciente paciente = (Paciente) o;
+        return rg == paciente.rg && healthInsurance == paciente.healthInsurance && Objects.equals(name, paciente.name) && Objects.equals(phone, paciente.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, rg, healthInsurance, phone);
     }
 }
