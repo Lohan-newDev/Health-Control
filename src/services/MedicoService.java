@@ -5,6 +5,7 @@ import MedicoExceptions.MedicoNãoExisteException;
 import models.Medico;
 
 import javax.xml.crypto.Data;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,7 @@ public class MedicoService {
     private List<Medico> listaDeMedico = new ArrayList<>();
 
 
-
-
-    public void cadastrarMedico (String name, int crm, LocalDate diaDeAtendimento){
+    public void cadastrarMedico (String name, int crm, List<DayOfWeek> diaDeAtendimento){
 
         Medico novoMedico = new Medico (name, crm, diaDeAtendimento);
 
@@ -32,6 +31,20 @@ public class MedicoService {
 
     public List<Medico> verListaDeMedicos() {
         return listaDeMedico;
+    }
+
+    public List<Medico> procurarMedicoPorDiaDeAtendimento(DayOfWeek dia){
+
+        List<Medico> medicos = new ArrayList<>();
+
+        for(Medico m : listaDeMedico){
+            if(m.getDiaDeAtendimento().contains(dia) ){
+                medicos.add(m);
+            }
+        }
+
+        return medicos;
+
     }
 
     public void apagarUmMedico(int crm) {
