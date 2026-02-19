@@ -47,6 +47,17 @@ public class MedicoService {
 
     }
 
+    public Medico procurarMedicoPorCrm(int crm){
+
+        for( Medico m : listaDeMedico){
+            if(m.getCrm() == crm){
+                return m;
+            }
+        }
+        throw new MedicoNãoExisteException("Medico com esse crm não está cadastrado!");
+
+    }
+
     public void apagarUmMedico(int crm) {
         for (Medico m : listaDeMedico) {
             if (m.getCrm() == crm) {
