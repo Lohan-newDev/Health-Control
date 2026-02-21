@@ -12,9 +12,9 @@ public class PacienteService {
     private List<Paciente> listaDePacientes = new ArrayList<>();
 
 
-    public void cadastraPaciente(String name, int rg, int healthInsurance, String phone){
+    public void cadastraPaciente(String name, int idade, int rg, int healthInsurance, String phone){
 
-        Paciente novoPaciente = new Paciente (name, rg, healthInsurance, phone);
+        Paciente novoPaciente = new Paciente (name, idade, rg, healthInsurance, phone);
 
         for(Paciente p : listaDePacientes){
             if(p.getRg() == rg){

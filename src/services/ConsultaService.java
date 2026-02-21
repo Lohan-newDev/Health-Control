@@ -1,6 +1,8 @@
 package services;
 
 import ConsultaExceptions.HorarioDeConsultaOcupadoException;
+import MedicoExceptions.MedicoNaoExisteException;
+import PacienteException.PacienteNaoEncontradoException;
 import models.Consulta;
 import models.Medico;
 import models.Paciente;
@@ -11,31 +13,32 @@ import java.util.List;
 
 public class ConsultaService {
 
-    List<Consulta> consultas = new ArrayList<>();
+    private List<Consulta> consultas = new ArrayList<>();
 
-    public void agendarUmaConsulta(int rgPaciente, int crmMedico, LocalDateTime horarioDaConsulta){
+    private PacienteService pacienteService = new PacienteService();
+    private MedicoService medicoService = new MedicoService();
 
-        PacienteService pacienteService = new PacienteService();
+    public void agendarUmaConsulta(int rgPaciente, int crmMedico, LocalDateTime horarioDaConsulta) {
+
         Paciente paciente = pacienteService.procurarPacientePorRg(rgPaciente);
-
-        MedicoService medicoService = new MedicoService();
         Medico medico = medicoService.procurarMedicoPorCrm(crmMedico);
 
-        Consulta consulta = new Consulta(paciente.getRg(), medico.getCrm(), horarioDaConsulta);
-        
-        for(Consulta c : consultas){
-            if(c.getHorarioDaConsulta() == horarioDaConsulta){
-                throw new HorarioDeConsultaOcupadoException("Este horario ja tem consulta marcada");
-            }
-            else{
-               consultas.add(consulta);
-            }
+        if(medico == null){
+            throw new MedicoNaoExisteException("Medico não existente");
+        }
+        if(paciente == null){
+            throw new PacienteNaoEncontradoException("Paciente não existente");
         }
 
+        Consulta consulta = new Consulta(paciente.getRg(), medico.getCrm(), horarioDaConsulta);
+
+        for (Consulta c : consultas) {
+            if (c.getHorarioDaConsulta().equals(horarioDaConsulta) && c.getCrmMedico() == crmMedico ||
+                    c.getHorarioDaConsulta().equals(horarioDaConsulta) && c.getCrmMedico() != crmMedico && c.getRgPaciente() == rgPaciente  ) {
+                throw new HorarioDeConsultaOcupadoException("Este horario ja tem consulta!");
+            }
+        }
         consultas.add(consulta);
-
-
     }
-
 
 }

@@ -1,12 +1,10 @@
 package services;
 
 import MedicoExceptions.MedicoJaCadastradoException;
-import MedicoExceptions.MedicoNãoExisteException;
+import MedicoExceptions.MedicoNaoExisteException;
 import models.Medico;
 
-import javax.xml.crypto.Data;
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +52,7 @@ public class MedicoService {
                 return m;
             }
         }
-        throw new MedicoNãoExisteException("Medico com esse crm não está cadastrado!");
+        throw new MedicoNaoExisteException("Medico com esse crm não está cadastrado!");
 
     }
 

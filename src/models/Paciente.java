@@ -5,12 +5,14 @@ import java.util.Objects;
 public class Paciente {
 
     public String name;
+    public int idade;
     public int rg;
     public int healthInsurance;
     public String phone;
 
-    public Paciente(String name, int rg, int healthInsurance, String phone){
+    public Paciente(String name,int idade, int rg, int healthInsurance, String phone){
         this.name = name;
+        this.idade = idade;
         this.rg = rg;
         this.healthInsurance = healthInsurance;
         this.phone = phone;
@@ -23,6 +25,14 @@ public class Paciente {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
     public int getRg() {
