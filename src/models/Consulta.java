@@ -1,13 +1,15 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Consulta {
+public class Consulta implements Serializable {
     private int crmMedico;
     private int rgPaciente;
     private LocalDateTime horarioDaConsulta;
+    private static final long serialVersion = 1L;
 
     public Consulta(int crmMedico, int rgPaciente, LocalDateTime horarioDaConsulta) {
         this.crmMedico = crmMedico;

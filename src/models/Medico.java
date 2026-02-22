@@ -1,16 +1,17 @@
 package models;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class Medico {
+public class Medico implements Serializable {
 
     private String name;
     private int crm;
     private List<DayOfWeek> diaDeAtendimento;
-
+    private static final long serialVersionUID = 1L;
 
     public Medico(String name, int crm, List<DayOfWeek> DiaDeAtendimento) {
         this.name = name;

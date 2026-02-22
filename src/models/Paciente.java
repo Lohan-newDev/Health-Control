@@ -1,14 +1,16 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Paciente {
+public class Paciente implements Serializable {
 
-    public String name;
-    public int idade;
-    public int rg;
-    public int healthInsurance;
-    public String phone;
+    private String name;
+    private int idade;
+    private int rg;
+    private int healthInsurance;
+    private String phone;
+    private static final long serialVersionUID = 1L;
 
     public Paciente(String name,int idade, int rg, int healthInsurance, String phone){
         this.name = name;
