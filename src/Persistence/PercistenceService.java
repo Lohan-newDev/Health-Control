@@ -6,11 +6,15 @@ import java.util.List;
 
 public class PercistenceService {
 
-    private final String ARQUIVO = "documentos.dat";
+    private String arquivo;
+
+    public PercistenceService(){
+        this.arquivo = arquivo;
+    }
 
     public void salvarDado (List<?> lista){
         try (ObjectOutputStream oos = new ObjectOutputStream(
-                new FileOutputStream(ARQUIVO))) {
+                new FileOutputStream(arquivo))) {
 
             oos.writeObject(lista);
 
@@ -22,7 +26,7 @@ public class PercistenceService {
     public <T> List<T> carregarDado(){
         try (ObjectInputStream ois = new ObjectInputStream(
 
-                new FileInputStream(ARQUIVO))){
+                new FileInputStream(arquivo))){
 
             return (List<T>) ois.readObject();
 
