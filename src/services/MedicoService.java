@@ -2,6 +2,7 @@ package services;
 
 import MedicoExceptions.MedicoJaCadastradoException;
 import MedicoExceptions.MedicoNaoExisteException;
+import Persistence.PercistenceService;
 import models.Medico;
 
 import java.time.DayOfWeek;
@@ -11,6 +12,11 @@ import java.util.List;
 public class MedicoService {
 
     private List<Medico> listaDeMedico = new ArrayList<>();
+    PercistenceService medicoPercistence = new PercistenceService();
+
+    public MedicoService (){
+        listaDeMedico = medicoPercistence.carregarDado();
+    }
 
 
     public void cadastrarMedico (String name, int crm, List<DayOfWeek> diaDeAtendimento){
@@ -25,6 +31,7 @@ public class MedicoService {
             }
         }
         listaDeMedico.add(novoMedico);
+        medicoPercistence.salvarDado(listaDeMedico);
     }
 
     public List<Medico> verListaDeMedicos() {
@@ -63,5 +70,6 @@ public class MedicoService {
             }
 
         }
+        medicoPercistence.salvarDado(listaDeMedico);
     }
 }

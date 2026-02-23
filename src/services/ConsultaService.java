@@ -3,6 +3,7 @@ package services;
 import ConsultaExceptions.HorarioDeConsultaOcupadoException;
 import MedicoExceptions.MedicoNaoExisteException;
 import PacienteException.PacienteNaoEncontradoException;
+import Persistence.PercistenceService;
 import models.Consulta;
 import models.Medico;
 import models.Paciente;
@@ -14,9 +15,14 @@ import java.util.List;
 public class ConsultaService {
 
     private List<Consulta> consultas = new ArrayList<>();
+    PercistenceService consultaPercistence = new PercistenceService();
 
     private PacienteService pacienteService = new PacienteService();
     private MedicoService medicoService = new MedicoService();
+
+    public ConsultaService(){
+        consultas = consultaPercistence.carregarDado();
+    }
 
     public void agendarUmaConsulta(int rgPaciente, int crmMedico, LocalDateTime horarioDaConsulta) {
 
@@ -39,6 +45,7 @@ public class ConsultaService {
             }
         }
         consultas.add(consulta);
+        consultaPercistence.salvarDado(consultas);
     }
 
 }

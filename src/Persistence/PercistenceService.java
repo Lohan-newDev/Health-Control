@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PercistenceService {
 
-    private final String ARQUIVO = "consulta.dat";
+    private final String ARQUIVO = "documentos.dat";
 
     public void salvarDado (List<?> lista){
         try (ObjectOutputStream oos = new ObjectOutputStream(
