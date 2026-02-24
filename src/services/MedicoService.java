@@ -38,7 +38,7 @@ public class MedicoService {
         return listaDeMedico;
     }
 
-    public List<Medico> procurarMedicoPorDiaDeAtendimento(DayOfWeek dia){
+    public List<Medico> procurarMedicosPorDiaDeAtendimento(DayOfWeek dia){
 
         List<Medico> medicos = new ArrayList<>();
 

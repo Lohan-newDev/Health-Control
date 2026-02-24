@@ -2,6 +2,7 @@ package services;
 
 import PacienteException.PacienteJaCadastradoException;
 import PacienteException.PacienteNaoEncontradoException;
+import Persistence.PercistenceService;
 import models.Paciente;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 public class PacienteService {
 
     private List<Paciente> listaDePacientes = new ArrayList<>();
+    PercistenceService pacientePercistense = new PercistenceService();
 
 
     public void cadastraPaciente(String name, int idade, int rg, int healthInsurance, String phone){
@@ -24,6 +26,7 @@ public class PacienteService {
             }
         }
         listaDePacientes.add(novoPaciente);
+        pacientePercistense.salvarDado(listaDePacientes);
     }
 
     public List<Paciente> verListaDePacientesCadastrados(){
@@ -57,6 +60,7 @@ public class PacienteService {
         for(Paciente p : listaDePacientes){
             if(p.getRg() == rg){
                 listaDePacientes.remove(p);
+                pacientePercistense.salvarDado(listaDePacientes);
             }
         }
     }
