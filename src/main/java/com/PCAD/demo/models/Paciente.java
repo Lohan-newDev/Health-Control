@@ -24,13 +24,13 @@ public class Paciente implements Serializable {
     private int personalId;
 
     @Column(name = "healthInsurance")
-    private int healthInsurance;
+    private Integer healthInsurance;
 
     @Column(name = "phone")
     private String phone;
 
 
-    public Paciente(UUID id, String name,int age, int personalId, int healthInsurance, String phone){
+    public Paciente(UUID id, String name,int age, int personalId, Integer healthInsurance, String phone){
         this.id = id;
         this.name = name;
         this.age = age;
@@ -39,6 +39,13 @@ public class Paciente implements Serializable {
         this.phone = phone;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

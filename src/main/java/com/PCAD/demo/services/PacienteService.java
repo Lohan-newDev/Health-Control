@@ -2,64 +2,68 @@ package com.PCAD.demo.services;
 
 import com.PCAD.demo.exceptions.pacienteException.PacienteJaCadastradoException;
 import com.PCAD.demo.exceptions.pacienteException.PacienteNaoEncontradoException;
+import com.PCAD.demo.models.Paciente;
+import com.PCAD.demo.repositories.PacienteRepository;
 import org.springframework.stereotype.Service;
-
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 
 @Service
 public class PacienteService {
 
+    private final PacienteRepository pacienteRepository;
 
-    public void cadastraPaciente(String name, int idade, int rg, int healthInsurance, String phone){
+    private PacienteService(PacienteRepository pacienteRepository){
+        this.pacienteRepository = pacienteRepository;
+    };
 
-        Paciente novoPaciente = new Paciente (name, idade, rg, healthInsurance, phone);
+    public void cadastraPaciente(Paciente paciente){
 
-        for(Paciente p : listaDePacientes){
-            if(p.getRg() == rg){
-                throw new PacienteJaCadastradoException(
-                        "Este Paciente ja está cadastrado"
-                        );
-            }
+        if(pacienteRepository.existsById(paciente.getId())) {
+            throw new PacienteJaCadastradoException("Esse paciente ja existe!");
         }
-        listaDePacientes.add(novoPaciente);
-        pacientePercistense.salvarDado(listaDePacientes);
-    }
-
-    public List<Paciente> verListaDePacientesCadastrados(){
-        return listaDePacientes;
-    }
-
-    public List<Paciente> procurarPacientesComPlanoDeSaude(int healthInsurance){
-
-        List<Paciente> pacientes = new ArrayList<>();
-
-        for(Paciente p : listaDePacientes){
-            if (p.getHealthInsurance() == healthInsurance){
-                pacientes.add(p);
-            }
+        else{
+            pacienteRepository.save(paciente);
         }
 
-        return pacientes;
     }
 
-    public Paciente procurarPacientePorRg (int rg){
+    public List<Paciente> findPacientes(){
+        return pacienteRepository.findAll();
+    }
 
-        for(Paciente p : listaDePacientes){
-            if(p.getRg() == rg){
-                return p;
-            }
+    public List<Paciente> findPacienteWithHealthInsurance(){
+
+        return pacienteRepository.findByHealthInsuranceNotNull();
+
+    }
+
+    public List<Paciente> findPacientesByName(String name){
+
+        return pacienteRepository.findByName(name);
+
+    }
+
+    public Paciente findPacienteByPersonalId (int personalId){
+
+
+        return pacienteRepository.findByPersonalId();
+
+
+    }
+
+    public void apagarUmPaciente(UUID id){
+
+        if(!pacienteRepository.existsById(id)){
+            throw new PacienteNaoEncontradoException("Esse Paciente não existe");
         }
-        throw new PacienteNaoEncontradoException("Esse paciente não tem cadastro!");
+
+        pacienteRepository.deleteById(id);
+
+
     }
 
-    public void apagarUmPaciente(int rg){
-        for(Paciente p : listaDePacientes){
-            if(p.getRg() == rg){
-                listaDePacientes.remove(p);
-                pacientePercistense.salvarDado(listaDePacientes);
-            }
-        }
-    }
+
 }
