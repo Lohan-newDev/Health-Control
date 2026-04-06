@@ -9,9 +9,10 @@ import java.util.UUID;
 
 public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
 
-    @Query("SELECT p FROM paciente p WHERE p.healthInsurance IS NOT NULL AND p.healthInsurance <> 0")
+    @Query("SELECT p FROM pacientes p WHERE p.healthInsurance IS NOT NULL AND p.healthInsurance <> 0")
     List<Paciente> findByHealthInsuranceNotNull();
-    Paciente findByPersonalId();
 
+    Paciente findByPersonalId();
     List<Paciente> findByName(String name);
+    List<Paciente> findByAge(int age);
 }

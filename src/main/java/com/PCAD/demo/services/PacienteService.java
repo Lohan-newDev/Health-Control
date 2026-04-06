@@ -46,6 +46,10 @@ public class PacienteService {
 
     }
 
+    public List<Paciente> findPacienteByAge(int age){
+        return pacienteRepository.findByAge(age);
+    }
+
     public Paciente findPacienteByPersonalId (int personalId){
 
 

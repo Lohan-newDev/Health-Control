@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Paciente implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "name")

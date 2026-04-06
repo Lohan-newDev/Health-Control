@@ -1,9 +1,9 @@
-package services;
+package com.PCAD.demo.services;
 
 import com.PCAD.demo.exceptions.medicoExceptions.MedicoJaCadastradoException;
 import com.PCAD.demo.exceptions.medicoExceptions.MedicoNaoExisteException;
-import Persistence.PercistenceService;
-import models.Medico;
+import com.PCAD.demo.models.Medico;
+import com.PCAD.demo.repositories.MedicoRepository;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
@@ -11,45 +11,43 @@ import java.util.List;
 
 public class MedicoService {
 
-    private List<Medico> listaDeMedico = new ArrayList<>();
-    PercistenceService medicoPercistence = new PercistenceService();
+    private final MedicoRepository medicoRepository;
 
-    public MedicoService (){
-        listaDeMedico = medicoPercistence.carregarDado();
+    public MedicoService (MedicoRepository medicoRepository){
+        this.medicoRepository = medicoRepository;
     }
 
 
-    public void cadastrarMedico (String name, int crm, List<DayOfWeek> diaDeAtendimento){
 
-        Medico novoMedico = new Medico (name, crm, diaDeAtendimento);
 
-        for (Medico m : listaDeMedico) {
-            if (m.getCrm() == crm) {
-                throw new MedicoJaCadastradoException(
-                        "O medico de CRM (" + crm + ")ja está cadastrado em nosso sistema."
-                );
-            }
+    public void cadastrarMedico (Medico medico){
+
+        if(medicoRepository.existsById(medico.getId())){
+            throw new MedicoJaCadastradoException("Este medico ja Existe");
+        }else {
+            medicoRepository.save(medico);
         }
-        listaDeMedico.add(novoMedico);
-        medicoPercistence.salvarDado(listaDeMedico);
     }
+
+    public List<Medico> procurarMedicosPorDiaDeAtendimento(DayOfWeek day){
+
+
+        return medicoRepository.findByDayJobs();
+    }
+//        List<Medico> medicos = new ArrayList<>();
+//
+//        for(Medico m : listaDeMedico){
+//            if(m.getDiaDeAtendimento().contains(dia) ){
+//                medicos.add(m);
+//            }
+//        }
+//
+//        return medicos;
+
+
 
     public List<Medico> verListaDeMedicos() {
-        return listaDeMedico;
-    }
-
-    public List<Medico> procurarMedicosPorDiaDeAtendimento(DayOfWeek dia){
-
-        List<Medico> medicos = new ArrayList<>();
-
-        for(Medico m : listaDeMedico){
-            if(m.getDiaDeAtendimento().contains(dia) ){
-                medicos.add(m);
-            }
-        }
-
-        return medicos;
-
+        return medicoRepository.findAll();
     }
 
     public Medico procurarMedicoPorCrm(int crm){

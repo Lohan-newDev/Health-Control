@@ -1,22 +1,23 @@
-package models;
+package com.PCAD.demo.models;
 
 import jakarta.persistence.*;
-import org.hibernate.validator.constraints.UUID;
 
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "medicos")
 public class Medico implements Serializable {
 
-    @UUID
-    @GeneratedValue
-    private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private java.util.UUID id;
 
     @Column(name = "name")
     private String name;
@@ -24,19 +25,15 @@ public class Medico implements Serializable {
     @Column(name = "crm")
     private int crm;
 
-    @ElementCollection(targetClass = DayOfWeek.class)
-    @Enumerated(EnumType.STRING)
-    private List<DayOfWeek> diaDeAtendimento;
-
-    private LocalTime horaInicio;
-    private LocalTime horaFim;
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DayJob> dayJobs = new ArrayList<>();
 
 
-    public Medico(String name, int crm) {
+    public Medico(UUID id, String name, int crm, DayJob dayJob) {
+        this.id = id;
         this.name = name;
         this.crm = crm;
-//        this.diaDeAtendimento = DiaDeAtendimento;
-
+        this.dayJobs = dayJobs;
     }
 
     public UUID getId() {
@@ -63,40 +60,24 @@ public class Medico implements Serializable {
         this.crm = crm;
     }
 
-    public List<DayOfWeek> getDiaDeAtendimento() {
-        return diaDeAtendimento;
+    public List<DayJob> getDayJobs() {
+        return dayJobs;
     }
 
-    public void setDiaDeAtendimento(List<DayOfWeek> diaDeAtendimento) {
-        this.diaDeAtendimento = diaDeAtendimento;
-    }
-
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public LocalTime getHoraFim() {
-        return horaFim;
-    }
-
-    public void setHoraFim(LocalTime horaFim) {
-        this.horaFim = horaFim;
+    public void setDayJobs(List<DayJob> dayJobs) {
+        this.dayJobs = dayJobs;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Medico medico = (Medico) o;
-        return Objects.equals(id, medico.id);
+        return crm == medico.crm && Objects.equals(id, medico.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id, name, crm);
     }
 
     @Override
